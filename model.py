@@ -5,7 +5,7 @@ import random
 @dataclass
 class ModelRateZahl:
     leben: int = 3
-    zu_raten: int = random.randint(1, 10)
+    zu_raten: int = random.randint(0, 10)
     user_eingabe: int = None
 
     def ist_spiel_verloren(self) -> bool:

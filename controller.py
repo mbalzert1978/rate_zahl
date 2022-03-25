@@ -8,19 +8,23 @@ class ControllerZahlRaten:
         self.view = view
 
     def play(self):
+        self.view.rate_zahl_header()
         while True:
-            self.view.print_Banner()
+            self.view.rate_zahl_eingabe_fehler()
             self.nutzerzahl_abfragen()
             if self.model.prüfe_zahl():
-                self.view.print_gewonnen(self.model.zu_raten)
+                self.view.rate_zahl_gewonnen(self.model.zu_raten)
                 break
             if not self.model.ist_kleiner():
-                self.view.print_tip(False)
+                self.view.rate_zahl_falsch_geraten()
+                self.view.rate_zahl_tip(False)
             else:
-                self.view.print_tip(True)
+                self.view.rate_zahl_falsch_geraten()
+                self.view.rate_zahl_tip(True)
             if not self.model.ist_spiel_verloren():
-                self.view.spiel_zu_ende_verlore(self.model.zu_raten)
+                self.view.rate_zahl_zu_ende_verlore(self.model.zu_raten)
                 break
+            self.view.rate_zahl_footer()
 
     def nutzerzahl_abfragen(self) -> None:
         valid = list(range(1, 11))
@@ -31,4 +35,4 @@ class ControllerZahlRaten:
                     raise ValueError
                 break
             except ValueError:
-                self.view.print_rate_zahl_eingabe_fehler()
+                self.view.rate_zahl_eingabe_fehler()
