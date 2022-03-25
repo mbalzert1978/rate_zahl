@@ -11,10 +11,10 @@ class ControllerZahlRaten:
         while True:
             self.view.print_Banner()
             self.nutzerzahl_abfragen()
-            if self.model.prüfe_zahl(self.user_eingabe):
+            if self.model.prüfe_zahl():
                 self.view.print_gewonnen(self.model.zu_raten)
                 break
-            if not self.model.ist_kleiner(self.user_eingabe):
+            if not self.model.ist_kleiner():
                 self.view.print_tip(False)
             else:
                 self.view.print_tip(True)
@@ -26,8 +26,8 @@ class ControllerZahlRaten:
         valid = list(range(1, 11))
         while True:
             try:
-                self.user_eingabe = int(input())
-                if self.user_eingabe not in valid:
+                self.model.user_eingabe = int(input())
+                if self.model.user_eingabe not in valid:
                     raise ValueError
                 break
             except ValueError:
