@@ -9,7 +9,7 @@ class ModelRateZahl:
     user_eingabe: int = None
 
     def ist_spiel_verloren(self) -> bool:
-        return self.leben
+        return not self.leben
 
     def prüfe_zahl(self) -> bool:
         if self.user_eingabe != self.zu_raten:

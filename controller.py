@@ -21,7 +21,7 @@ class ControllerZahlRaten:
             else:
                 self.view.rate_zahl_falsch_geraten()
                 self.view.rate_zahl_tip(True)
-            if not self.model.ist_spiel_verloren():
+            if self.model.ist_spiel_verloren():
                 self.view.rate_zahl_zu_ende_verlore(self.model.zu_raten)
                 break
             self.view.rate_zahl_footer()
