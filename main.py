@@ -1,3 +1,4 @@
+from player import HumanPlayer, RanadomCPU
 from view import ViewRateZahl
 from controller import ControllerZahlRaten
 from model import ModelRateZahl
@@ -11,7 +12,8 @@ def main():
 def setup_game():
     m = ModelRateZahl()
     v = ViewRateZahl()
-    app = ControllerZahlRaten(model=m, view=v)
+    list_of_players = [HumanPlayer(), RanadomCPU()]
+    app = ControllerZahlRaten(model=m, view=v, players=list_of_players)
     return app
 
 
