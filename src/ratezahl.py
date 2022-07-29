@@ -49,6 +49,13 @@ class RateZahl(App):
             raise ValueError(f"No valid Gameinstace: {value}")
         self.__game = value
 
+    def set_active_player(self) -> None:
+        activ_players_index = self.players.index(self.active_player)
+        if not activ_players_index + 1 < len(self.players):
+            self.active_player = self.players[0]
+            return
+        self.active_player = self.players[activ_players_index + 1]
+
     def create_ui(self) -> None:
         raise NotImplementedError
 
