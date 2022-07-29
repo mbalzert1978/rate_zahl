@@ -1,5 +1,7 @@
-from abc import ABC
+from abc import ABC, abstractproperty
 
 
 class View(ABC):
-    pass
+    @abstractproperty
+    def app(self):
+        raise NotImplementedError()
