@@ -10,5 +10,9 @@ class GameLogic(ABC):
         """make a gues"""
 
     @abstractmethod
+    def hint(self):
+        """give a hint"""
+
+    @abstractmethod
     def is_winner(self):
         """checks if there is a winner"""
