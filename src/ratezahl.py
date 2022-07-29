@@ -41,7 +41,7 @@ class RateZahl(App):
 
     @property
     def game(self) -> None:
-        return self.__view
+        return self.__game
 
     @game.setter
     def game(self, value: Game) -> None:
