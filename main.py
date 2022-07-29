@@ -13,7 +13,8 @@ def setup_game():
 
 
 def app():
-    pass
+    game = setup_game()
+    game.play()
 
 
 if __name__ == "__main__":
