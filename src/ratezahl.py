@@ -13,6 +13,19 @@ class RateZahl(App):
     def __init__(self, game, players) -> None:
         self.game = game
         self.players = players
+
+    @property
+    def players(self) -> None:
+        return self.__players
+
+    @players.setter
+    def players(self, value: list[Player]) -> None:
+        if not isinstance(value, list):
+            raise ValueError(f"No valid Playerlist: {value}")
+        if not isinstance(value, Game):
+            raise ValueError(f"No valid Playerlist: {value}")
+        self.__players = value
+
     @property
     def game(self) -> None:
         return self.__game
