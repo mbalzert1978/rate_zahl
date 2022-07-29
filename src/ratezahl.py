@@ -12,9 +12,10 @@ if TYPE_CHECKING:
 
 class RateZahl(App):
     def __init__(self, game, view, players) -> None:
-        self.game = game
-        self.view = view
-        self.players = players
+        self.game: Game = game
+        self.view: View = view
+        self.players: list[Player] = players
+        self.active_player: Player = random.choice(self.players)
 
     @property
     def players(self) -> None:
