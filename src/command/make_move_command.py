@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from src.app import App
-    from src.game.game import Game
+    from src.game.gamelogic import GameLogic
 from src.command.command import Command
 
 
@@ -24,7 +24,7 @@ class MakeMove(Command):
         return self.__logic
 
     @logic.setter
-    def logic(self, value: Game):
-        if isinstance(value, Game):
+    def logic(self, value: GameLogic):
+        if isinstance(value, GameLogic):
             self.__logic = value
         raise ValueError(f"No valid Gamelogic: {value}")
