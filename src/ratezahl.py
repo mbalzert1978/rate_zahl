@@ -1,9 +1,7 @@
 from __future__ import annotations
 import random
-from typing import TYPE_CHECKING
-from src.app import App
-
-if TYPE_CHECKING:
+from src.game.gamelogic import GameLogic
+from src.view.view import View
     from src.player.players import Player
     from src.app import App
     from src.game.game import Game
