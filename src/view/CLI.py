@@ -1,5 +1,2 @@
-import tkinter as tk
-
-
-class CLI(tk.Frame):
+class CLI:
     pass
