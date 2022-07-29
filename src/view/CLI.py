@@ -20,3 +20,15 @@ class CLI(View):
 
     def display_header(self) -> None:
         raise NotImplementedError()
+
+    def display_hint(self) -> None:
+        raise NotImplementedError()
+
+    def display_gamestate(self) -> None:
+        raise NotImplementedError()
+
+    def display_gues(self) -> None:
+        raise NotImplementedError()
+
+    def display_footer(self) -> None:
+        raise NotImplementedError()
