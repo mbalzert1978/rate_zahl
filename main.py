@@ -1,7 +1,7 @@
-from player import HumanPlayer, RanadomCPU
-from view import ViewRateZahl
-from controller import ControllerZahlRaten
-from model import ModelRateZahl
+from player import HumanPlayer, RandomCPU
+from view import GuessTheNumberCLI
+from controller import GuessTheNumberController
+from model import GuessTheNumberGameModel
 
 
 def main():
@@ -10,10 +10,10 @@ def main():
 
 
 def setup_game():
-    m = ModelRateZahl()
-    v = ViewRateZahl()
-    list_of_players = [HumanPlayer(), RanadomCPU()]
-    app = ControllerZahlRaten(model=m, view=v, players=list_of_players)
+    m = GuessTheNumberGameModel()
+    v = GuessTheNumberCLI()
+    list_of_players = [HumanPlayer(), RandomCPU()]
+    app = GuessTheNumberController(model=m, view=v, players=list_of_players)
     return app
 
 

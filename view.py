@@ -1,36 +1,50 @@
-class ViewRateZahl:
-    @staticmethod
-    def rate_zahl_header() -> None:
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+import tkinter as tk
+
+
+@dataclass
+class View(ABC):
+    @abstractmethod
+    def display_header(self) -> None:
+        """Displays the Header"""
+
+    @abstractmethod
+    def display_footer(self) -> None:
+        """Displays the footer"""
+
+    @abstractmethod
+    def display_message(self, message: str | tuple) -> None:
+        """Displays an message"""
+
+
+@dataclass
+class GuessTheNumberCLI(View):
+    def display_header(self) -> None:
         print("RateSpiel 1.0")
         print("Erate eine zufällige Zahl mit 3 Leben. Viel Spaß")
         print("#" * 20)
 
-    @staticmethod
-    def rate_zahl_footer() -> None:
+    def display_footer(self) -> None:
         print("#" * 20)
 
-    @staticmethod
-    def rate_zahl_eingabe_fehler():
-        print("Bitte geben Sie eine Zahl zwischen 0 und 10 an")
-
-    @staticmethod
-    def rate_zahl_falsch_geraten():
-        print("Leider Falsch geraten! Du verlierst ein Leben")
-
-    @staticmethod
-    def rate_zahl_gewonnen(zahl: int):
-        print("Game Over")
-        print("Richtig geraten!")
-        print(f"Die gesuchte Zahl war: {zahl}")
-
-    @staticmethod
-    def rate_zahl_tip(ist_kleiner: bool):
-        if not ist_kleiner:
-            print("Deine gewählte Zahl ist zu groß")
+    def display_message(self, message: str | tuple) -> None:
+        if isinstance(message, tuple):
+            print(" ".join(message))
             return
-        print("Deine gewählte Zahl ist zu klein")
+        print(message)
 
-    @staticmethod
-    def rate_zahl_zu_ende_verlore(zahl: int):
-        print("Game Over")
-        print(f"Die gesuchte Zahl war: {zahl}")
+
+@dataclass
+class GuessTheNumberTki(View):
+    def display_header(self) -> None:
+        """Displays the Header"""
+        pass
+
+    def display_footer(self) -> None:
+        """Displays the footer"""
+        pass
+
+    def display_message(message: str | tuple) -> None:
+        """Displays an message"""
+        pass

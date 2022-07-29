@@ -1,23 +1,37 @@
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 import random
 
 
 @dataclass
-class ModelRateZahl:
-    leben: int = 3
-    zu_raten: int = random.randint(0, 10)
-    user_eingabe: int = None
+class Model(ABC):
+    pass
 
-    def ist_spiel_verloren(self) -> bool:
-        return not self.leben
 
-    def prüfe_zahl(self) -> bool:
-        if self.user_eingabe != self.zu_raten:
-            self.leben -= 1
+@dataclass
+class GameModel(Model):
+    life: int = 3
+
+    @abstractmethod
+    def is_game_lost(self) -> bool:
+        """returns if the game is lost or not"""
+
+
+@dataclass
+class GuessTheNumberGameModel(GameModel):
+    to_guess: int = random.randint(1, 10)
+    user_input: int = None
+
+    def is_game_lost(self) -> bool:
+        return not self.life
+
+    def is_number_to_search(self) -> bool:
+        if self.user_input != self.to_guess:
+            self.life -= 1
             return False
         return True
 
-    def ist_kleiner(self) -> bool:
-        if self.user_eingabe > self.zu_raten:
+    def is_lower(self) -> bool:
+        if self.user_input > self.to_guess:
             return False
         return True

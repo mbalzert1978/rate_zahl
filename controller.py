@@ -1,32 +1,58 @@
+from abc import ABC
+from dataclasses import dataclass
 import random
 from player import Player
-from view import ViewRateZahl
-from model import ModelRateZahl
+from view import GuessTheNumberCLI, View
+from model import GameModel
 
 
-class ControllerZahlRaten:
-    def __init__(self, model: ModelRateZahl, players: list[Player], view: ViewRateZahl = None) -> None:
+class Controller(ABC):
+    pass
+
+
+@dataclass
+class GuessTheNumberController:
+    model: GameModel
+
+    def __init__(
+        self, model: GameModel, players: list[Player], view: View
+    ) -> None:
         self.model = model
         self.view = view
         self.players = players
 
     def play(self):
         random.shuffle(self.players)
-        self.view.rate_zahl_header()
+        self.view.display_header()
         for player in self.players:
+            if not self.model.life:
+                self.model.life = 3
             while True:
-                self.view.rate_zahl_eingabe_fehler()
-                self.model.user_eingabe = player.gues(self.view.rate_zahl_eingabe_fehler)
-                if self.model.prüfe_zahl():
-                    self.view.rate_zahl_gewonnen(self.model.zu_raten)
+                self.view.display_message(
+                    f"{player} : Bitte geben Sie eine Zahl von 1-10 ein: "
+                )
+                self.model.user_input = player.gues(self.view.display_message)
+                if self.model.is_number_to_search():
+                    self.view.display_message(
+                        (
+                            "Game Over\n",
+                            "Richtig geraten!\n",
+                            f"Die gesuchte Zahl war: {self.model.to_guess}",
+                        )
+                    )
                     break
-                if not self.model.ist_kleiner():
-                    self.view.rate_zahl_falsch_geraten()
-                    self.view.rate_zahl_tip(False)
-                else:
-                    self.view.rate_zahl_falsch_geraten()
-                    self.view.rate_zahl_tip(True)
-                if self.model.ist_spiel_verloren():
-                    self.view.rate_zahl_zu_ende_verlore(self.model.zu_raten)
+                self.view.display_message(
+                    "Leider Falsch, deine Zahl war zu groß."
+                ) if not self.model.is_lower() else self.view.display_message(
+                    "Leider Falsch, deine Zahl war zu klein."
+                )
+                if self.model.is_game_lost():
+                    self.view.display_message(
+                        (
+                            "Game Over\n",
+                            "Leider verloren.\n",
+                            f"Die gesuchte Zahl war: {self.model.to_guess}",
+                        )
+                    )
                     break
-                self.view.rate_zahl_footer()
+                self.view.display_footer()
