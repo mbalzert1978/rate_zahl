@@ -10,6 +10,9 @@ from src.app import App
 
 
 class RateZahl(App):
+    def __init__(self, game, players) -> None:
+        self.game = game
+        self.players = players
     @property
     def game(self) -> None:
         return self.__game
