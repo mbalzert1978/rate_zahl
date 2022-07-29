@@ -2,10 +2,6 @@ from abc import ABC, abstractmethod, abstractproperty
 
 
 class Game(ABC):
-    @abstractproperty
-    def players(self):
-        """list of players"""
-
     @abstractmethod
     def make_move_command(self):
         """make player move"""
