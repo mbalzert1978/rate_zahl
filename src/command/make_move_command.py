@@ -6,7 +6,6 @@ from src.command.command import Command
 if TYPE_CHECKING:
     from src.app import App
     from src.game.gamelogic import GameLogic
-from src.command.command import Command
 
 
 class MakeMove(Command):
