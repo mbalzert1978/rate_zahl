@@ -3,6 +3,8 @@ import random
 
 
 class GameLogic(ABC):
+    to_gues: int = random.randint(1, 10)
+
     @abstractmethod
     def gues(self):
         """make a gues"""
