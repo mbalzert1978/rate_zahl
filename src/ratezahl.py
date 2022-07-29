@@ -28,6 +28,16 @@ class RateZahl(App):
         self.__players = value
 
     @property
+    def view(self) -> None:
+        return self.__view
+
+    @view.setter
+    def view(self, value: View) -> None:
+        if not isinstance(value, View):
+            raise ValueError(f"No valid Viewinstace: {value}")
+        self.__view = value
+
+    @property
     def game(self) -> None:
         return self.__game
 
