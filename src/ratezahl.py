@@ -6,6 +6,7 @@ if TYPE_CHECKING:
     from src.player.players import Player
     from src.app import App
     from src.game.game import Game
+    from src.view.view import View
 
 
 class RateZahl(App):
