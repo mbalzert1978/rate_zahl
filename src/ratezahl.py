@@ -12,6 +12,7 @@ if TYPE_CHECKING:
 class RateZahl(App):
     def __init__(self, game, players) -> None:
         self.game = game
+        self.view = view
         self.players = players
 
     @property
