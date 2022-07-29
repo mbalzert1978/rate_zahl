@@ -1,2 +1,3 @@
-# Rate Zahl 1.0
+# Rate Zahl 2.0
+
 Simples Zahlen raten als MVC Pattern
