@@ -1,23 +1,24 @@
-from dataclasses import dataclass
+from __future__ import annotations
+from typing import TYPE_CHECKING
+from dataclasses import dataclass, field
 import random
+
+if TYPE_CHECKING:
+    from controller import ControllerZahlRaten
 
 
 @dataclass
 class ModelRateZahl:
-    leben: int = 3
-    zu_raten: int = random.randint(0, 10)
-    user_eingabe: int = None
+    range_: tuple[int, int]
+    leben: int = field(default=3, init=False)
+    zu_raten: int = field(default=0, init=False)
+    controller: ControllerZahlRaten = field(default=None, init=False)
+
+    def __post_init__(self) -> None:
+        self.zu_raten = random.randint(*self.range_)
 
     def ist_spiel_verloren(self) -> bool:
         return not self.leben
 
-    def prüfe_zahl(self) -> bool:
-        if self.user_eingabe != self.zu_raten:
-            self.leben -= 1
-            return False
-        return True
-
-    def ist_kleiner(self) -> bool:
-        if self.user_eingabe > self.zu_raten:
-            return False
-        return True
+    def set_controller(self, value) -> None:
+        self.controller = value

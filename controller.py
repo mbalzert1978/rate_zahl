@@ -1,38 +1,47 @@
-from view import ViewRateZahl
-from model import ModelRateZahl
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from model import ModelRateZahl
+    from view import ViewRateZahl
 
 
 class ControllerZahlRaten:
     def __init__(self, model: ModelRateZahl, view: ViewRateZahl) -> None:
         self.model = model
         self.view = view
+        self.view.set_controller(self)
+        self.model.set_controller(self)
 
     def play(self):
-        self.view.rate_zahl_header()
+        self.view.display_header()
         while True:
-            self.view.rate_zahl_eingabe_fehler()
-            self.nutzerzahl_abfragen()
-            if self.model.prüfe_zahl():
-                self.view.rate_zahl_gewonnen(self.model.zu_raten)
+            self.view.get_user_input(list(range(*self.model.range_)))
+            if self.is_number_to_gues():
+                self.view.display_won(self.model.zu_raten)
                 break
-            if not self.model.ist_kleiner():
-                self.view.rate_zahl_falsch_geraten()
-                self.view.rate_zahl_tip(False)
+            if not self.ist_kleiner():
+                self.view.display_message(
+                    "Leider Falsch geraten! Du verlierst ein Leben"
+                )
+                self.view.display_hint(False)
             else:
-                self.view.rate_zahl_falsch_geraten()
-                self.view.rate_zahl_tip(True)
+                self.view.display_message(
+                    "Leider Falsch geraten! Du verlierst ein Leben"
+                )
+                self.view.display_hint(True)
             if self.model.ist_spiel_verloren():
-                self.view.rate_zahl_zu_ende_verlore(self.model.zu_raten)
+                self.view.display_lost(self.model.zu_raten)
                 break
-            self.view.rate_zahl_footer()
+            self.view.display_footer()
 
-    def nutzerzahl_abfragen(self) -> None:
-        valid = list(range(1, 11))
-        while True:
-            try:
-                self.model.user_eingabe = int(input())
-                if self.model.user_eingabe not in valid:
-                    raise ValueError
-                break
-            except ValueError:
-                self.view.rate_zahl_eingabe_fehler()
+    def is_number_to_gues(self) -> bool:
+        if self.user_eingabe != self.model.zu_raten:
+            self.model.leben -= 1
+            return False
+        return True
+
+    def ist_kleiner(self) -> bool:
+        if self.user_eingabe > self.model.zu_raten:
+            return False
+        return True

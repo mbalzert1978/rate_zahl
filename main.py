@@ -9,7 +9,7 @@ def main():
 
 
 def setup_game():
-    m = ModelRateZahl()
+    m = ModelRateZahl((1, 100))
     v = ViewRateZahl()
     app = ControllerZahlRaten(model=m, view=v)
     return app
