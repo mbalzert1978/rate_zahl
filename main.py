@@ -1,6 +1,7 @@
-from view import ViewRateZahl
-from controller import ControllerZahlRaten
-from model import ModelRateZahl
+from src.view.view import ViewRateZahl
+from src.controller.controller import ControllerZahlRaten
+from src.model.model import ModelRateZahl
+from src.helper.game_range import GameRange
 
 
 def main():
@@ -9,7 +10,8 @@ def main():
 
 
 def setup_game():
-    m = ModelRateZahl((1, 100))
+    gr = GameRange(1, 100)
+    m = ModelRateZahl(gues_range=gr)
     v = ViewRateZahl()
     app = ControllerZahlRaten(model=m, view=v)
     return app
