@@ -30,7 +30,7 @@ class ControllerZahlRaten:
                 )
                 break
             self._view.display_message(RateZahlMessages.DISPLAY_LIFE_LOST.value)
-            if not self.ist_kleiner():
+            if not self.is_user_input_smaller():
                 self.give_hint(False)
             else:
                 self.give_hint(True)
@@ -48,7 +48,7 @@ class ControllerZahlRaten:
             return False
         return True
 
-    def ist_kleiner(self) -> bool:
+    def is_user_input_smaller(self) -> bool:
         if self._user_eingabe > self._model._to_gues:
             return False
         return True
