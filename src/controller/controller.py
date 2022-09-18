@@ -21,7 +21,7 @@ class ControllerZahlRaten:
         self._view = view
 
     def play(self):
-        self._view.display_title(RateZahlMessages.DISPLAY_TITLE.value)
+        self._view.display_message(RateZahlMessages.DISPLAY_TITLE.value)
         while True:
             self.get_user_input()
             if self.is_number_guessed():
@@ -29,7 +29,9 @@ class ControllerZahlRaten:
                     RateZahlMessages.DISPLAY_GAMEOVER_WON.value
                 )
                 break
-            self._view.display_message(RateZahlMessages.DISPLAY_LIFE_LOST.value)
+            self._view.display_message(
+                RateZahlMessages.DISPLAY_LIFE_LOST.value
+            )
             if not self.is_user_input_smaller():
                 self.give_hint(False)
             else:
