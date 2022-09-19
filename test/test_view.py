@@ -1,8 +1,9 @@
-import sys
 import pytest
 from ..src.view.view import CLI
 from unittest.mock import MagicMock
 import builtins
+
+MOCKCONTROLLER = MagicMock()
 
 
 @pytest.fixture
@@ -10,11 +11,14 @@ def cli() -> CLI:
     mock_model = MagicMock()
     mock_model._gues_range.min = 1
     mock_model._gues_range.max = 10
-    mock_controller = MagicMock()
-    mock_controller._model = mock_model
+    MOCKCONTROLLER._model = mock_model
     v = CLI()
-    v.setup_controller(mock_controller)
+    v.setup_controller(MOCKCONTROLLER)
     return v
+
+
+def test_setup_controller(cli):
+    assert MOCKCONTROLLER == cli._controller
 
 
 def test_display_message(cli, capsys):
