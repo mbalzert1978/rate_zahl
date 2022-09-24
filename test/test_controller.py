@@ -1,4 +1,3 @@
-from collections import namedtuple
 from dataclasses import dataclass
 from unittest.mock import MagicMock
 from ..src.controller.controller import ControllerZahlRaten
