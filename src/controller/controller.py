@@ -22,42 +22,35 @@ class ControllerZahlRaten:
         self._view.setup_controller(self)
 
     def play(self):
-        self._view.display_message(RateZahlMessages.DISPLAY_TITLE.value)
-        while True:
-            self._view.get_user_input()
-            if self.is_number_guessed():
-                self._view.display_message(
-                    RateZahlMessages.DISPLAY_GAMEOVER_WON.value
-                )
-                break
-            self._view.display_message(
-                RateZahlMessages.DISPLAY_LIFE_LOST.value
-            )
-            if not self.is_user_input_smaller():
-                self.give_hint(False)
-            else:
-                self.give_hint(True)
-            if self._model.is_game_over():
-                self._view.display_message(
-                    RateZahlMessages.DISPLAY_GAMEOVER.value
-                    + str(self._model._to_gues)
-                )
-                break
-            self._view.display_message(RateZahlMessages.DISPLAY_FOOTER.value)
+        msg = RateZahlMessages
+        view = self._view
+        display = view.display_message
+        game_over = self._model.is_game_over
+        display(msg.TITLE.value)
+        gues_n = str(self._model._to_gues)
 
-    def is_number_guessed(self) -> bool:
+        while True:
+            view.get_user_input()
+            if self.is_guessed():
+                display(msg.WON.value % gues_n)
+                break
+            display(msg.LOSELIFE.value)
+            self.give_hint()
+            if game_over():
+                display(msg.GAMEOVER.value % gues_n)
+                break
+            display(msg.FOOTER.value)
+
+    def is_guessed(self) -> bool:
         if self._view._user_eingabe != self._model._to_gues:
             self._model._life -= 1
             return False
         return True
 
-    def is_user_input_smaller(self) -> bool:
+    def give_hint(self) -> None:
+        rzm = RateZahlMessages
+        view = self._view.display_message
         if self._view._user_eingabe > self._model._to_gues:
-            return False
-        return True
-
-    def give_hint(self, is_smaller: bool):
-        if is_smaller:
-            self._view.display_message(RateZahlMessages.HINT_SMALL.value)
+            view(rzm.TOBIG.value)
             return
-        self._view.display_message(RateZahlMessages.HINT_BIG.value)
+        view(rzm.TOSMALL.value)

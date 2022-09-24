@@ -1,5 +1,6 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, Protocol
+from ..helper.text_messages import RateZahlMessages
 
 if TYPE_CHECKING:
     from ..controller.controller import Controller
@@ -24,25 +25,27 @@ class CLI:
         self._controller = controller
 
     def get_user_input(self) -> None:
-        error_msg = (
-            f"Bitte geben Sie eine Zahl zwischen {self._controller._model._gues_range.min}"
-            + f" und {self._controller._model._gues_range.max} an:"
-        )
-        self.display_message(error_msg)
+        err_msg = RateZahlMessages.INPUTERR.value
+        minimum, maximum = self.get_min_max()
+        self.display_message(err_msg % (minimum, maximum))
+
         while True:
             try:
                 self._user_eingabe = self.try_user_value()
                 break
             except ValueError:
-                self.display_message(error_msg)
+                self.display_message(err_msg % (minimum, maximum))
 
     def try_user_value(self) -> int:
-        user_eingabe = int(input())
-        if user_eingabe not in list(
-            range(
-                self._controller._model._gues_range.min,
-                self._controller._model._gues_range.max + 1,
-            )
-        ):
+        minimum, maximum = self.get_min_max()
+        valid = list(range(minimum, maximum + 1))
+        user_input = int(input())
+
+        if user_input not in valid:
             raise ValueError
-        return user_eingabe
+        return user_input
+
+    def get_min_max(self):
+        minimum = self._controller._model._gues_range.min
+        maximum = self._controller._model._gues_range.max
+        return minimum, maximum
