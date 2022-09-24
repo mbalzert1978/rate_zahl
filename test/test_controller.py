@@ -38,7 +38,7 @@ def test_init(model, view: MagicMock):
 
 
 def test_is_guesed(setup: ControllerZahlRaten):
-    setup._view._user_eingabe = 5
+    setup._view._user_input = 5
     assert setup.is_guessed()
 
 
@@ -47,7 +47,7 @@ def test_is_guesed_fail(setup: ControllerZahlRaten):
 
 
 def test_give_hint_small(setup: ControllerZahlRaten):
-    setup._view._user_eingabe = 3
+    setup._view._user_input = 3
     setup.give_hint()
     assert setup._view.display_message.call_args.args == (
         "Deine gewählte Zahl ist zu klein",
@@ -55,7 +55,7 @@ def test_give_hint_small(setup: ControllerZahlRaten):
 
 
 def test_give_hint_big(setup: ControllerZahlRaten):
-    setup._view._user_eingabe = 6
+    setup._view._user_input = 6
     setup.give_hint()
     assert setup._view.display_message.call_args.args == (
         "Deine gewählte Zahl ist zu groß",

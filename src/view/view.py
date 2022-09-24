@@ -31,7 +31,7 @@ class CLI:
 
         while True:
             try:
-                self._user_eingabe = self.try_user_value()
+                self._user_input = self.try_user_value()
                 break
             except ValueError:
                 self.display_message(err_msg % (minimum, maximum))

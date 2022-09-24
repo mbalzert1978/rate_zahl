@@ -30,7 +30,7 @@ def test_display_message(cli, capsys):
 def test_get_user_input(cli, monkeypatch):
     monkeypatch.setattr(builtins, "input", lambda: "1")
     cli.get_user_input()
-    assert cli._user_eingabe == 1
+    assert cli._user_input == 1
 
 
 def test_get_user_input_fail_out_of_range(cli, monkeypatch):
