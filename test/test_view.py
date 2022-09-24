@@ -1,5 +1,5 @@
 import pytest
-from ..src.view.view import CLI
+from ..src.view.cli import CLI
 from unittest.mock import MagicMock
 import builtins
 
