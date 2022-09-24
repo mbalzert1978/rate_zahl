@@ -26,11 +26,12 @@ class ControllerZahlRaten:
         view = self._view
         display = view.display_message
         game_over = self._model.is_game_over
-        display(msg.TITLE.value)
         gues_n = str(self._model._to_gues)
+        user_input = view.get_user_input
 
+        display(msg.TITLE.value)
         while True:
-            view.get_user_input()
+            user_input()
             if self.is_guessed():
                 display(msg.WON.value % gues_n)
                 break
@@ -42,7 +43,7 @@ class ControllerZahlRaten:
             display(msg.FOOTER.value)
 
     def is_guessed(self) -> bool:
-        if self._view._user_eingabe != self._model._to_gues:
+        if self._view._user_input != self._model._to_gues:
             self._model._life -= 1
             return False
         return True
@@ -50,7 +51,7 @@ class ControllerZahlRaten:
     def give_hint(self) -> None:
         rzm = RateZahlMessages
         view = self._view.display_message
-        if self._view._user_eingabe > self._model._to_gues:
+        if self._view._user_input > self._model._to_gues:
             view(rzm.TOBIG.value)
             return
         view(rzm.TOSMALL.value)
