@@ -1,4 +1,4 @@
-from src.view.view import CLI
+from src.view.cli import CLI
 from src.controller.controller import ControllerZahlRaten
 from src.model.model import ModelRateZahl
 from src.helper.game_range import GameRange

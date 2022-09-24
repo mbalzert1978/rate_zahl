@@ -1,6 +1,8 @@
 from __future__ import annotations
+import tkinter as tk
 from typing import TYPE_CHECKING, Protocol
 from ..helper.text_messages import RateZahlMessages
+from ..helper.canvas_configuration import CanvasConfiguration
 
 if TYPE_CHECKING:
     from ..model.model import GameModel
@@ -13,6 +15,23 @@ class Controller(Protocol):
 
     def play(self) -> None:
         ...
+
+
+class TKCZahlRaten(tk.Tk):
+    def __init__(self, model, view) -> None:
+        self._model = model
+        self._view = view
+        self._view.setup_controller(self)
+        self.setup()
+
+    def setup(self) -> None:
+        cv = CanvasConfiguration
+        self.title(RateZahlMessages.TITLE.value)
+        self.config(bg=cv.GREY.value)
+        self.geometry(cv.GEOMETRY.value)
+
+    def play(self) -> None:
+        pass
 
 
 class ControllerZahlRaten:
