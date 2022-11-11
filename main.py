@@ -1,17 +1,15 @@
 from src.view.cli import CLI
 from src.controller.controller import ControllerZahlRaten
-from src.model.model import ModelRateZahl
-from src.helper.game_range import GameRange
+from src.model.model import RateZahlRepo
 
 
-def main():
+def main() -> None:
     game = setup_game()
     game.play()
 
 
-def setup_game():
-    gr = GameRange(1, 100)
-    m = ModelRateZahl(gues_range=gr)
+def setup_game() -> ControllerZahlRaten:
+    m = RateZahlRepo((1, 100))
     v = CLI()
     app = ControllerZahlRaten(model=m, view=v)
     return app
