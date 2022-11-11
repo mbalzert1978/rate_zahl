@@ -5,12 +5,12 @@ from ..helper.text_messages import RateZahlMessages
 from ..helper.canvas_configuration import CanvasConfiguration
 
 if TYPE_CHECKING:
-    from ..model.model import GameModel
+    from ..model.model import Repository
     from ..view.view import View
 
 
 class Controller(Protocol):
-    def __init__(self, model: GameModel, view: View) -> None:
+    def __init__(self, model: Repository, view: View) -> None:
         ...
 
     def play(self) -> None:
@@ -40,14 +40,13 @@ class ControllerZahlRaten:
         self._view = view
         self._view.setup_controller(self)
 
-    def play(self):
+    def play(self) -> None:
         msg = RateZahlMessages
         view = self._view
         display = view.display_message
         game_over = self._model.is_game_over
         gues_n = str(self._model._to_gues)
         user_input = view.get_user_input
-
         display(msg.TITLE.value)
         while True:
             user_input()
@@ -63,7 +62,7 @@ class ControllerZahlRaten:
 
     def is_guessed(self) -> bool:
         if self._view._user_input != self._model._to_gues:
-            self._model._life -= 1
+            self.model = self._model.replace(self._model._lifes - 1)
             return False
         return True
 
