@@ -1,18 +1,14 @@
 from dataclasses import dataclass
 from unittest.mock import MagicMock
+
+from ..src.model.model import RateZahlRepo
 from ..src.controller.controller import ControllerZahlRaten
 import pytest
 
 
 @pytest.fixture
-def model():
-    @dataclass
-    class Model:
-        _gues_range: tuple[int, int]
-        _life: int
-        _to_gues: int
-
-    return Model((1, 10), 3, 5)
+def model() -> RateZahlRepo:
+    return RateZahlRepo((5, 5), 3)
 
 
 @pytest.fixture()

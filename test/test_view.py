@@ -3,22 +3,20 @@ from ..src.view.cli import CLI
 from unittest.mock import MagicMock
 import builtins
 
-MOCKCONTROLLER = MagicMock()
+
+class RepoStub:
+    _gues_range = (1, 10)
+
+
+class ControllerStub:
+    _model = RepoStub()
 
 
 @pytest.fixture
 def cli() -> CLI:
-    mock_model = MagicMock()
-    mock_model._gues_range.min = 1
-    mock_model._gues_range.max = 10
-    MOCKCONTROLLER._model = mock_model
     v = CLI()
-    v.setup_controller(MOCKCONTROLLER)
+    v.setup_controller(ControllerStub)
     return v
-
-
-def test_setup_controller(cli):
-    assert MOCKCONTROLLER == cli._controller
 
 
 def test_display_message(cli, capsys):
@@ -35,11 +33,13 @@ def test_get_user_input(cli, monkeypatch):
 
 def test_get_user_input_fail_out_of_range(cli, monkeypatch):
     monkeypatch.setattr(builtins, "input", lambda: "165")
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError) as exc:
         cli.try_user_value()
+    assert "Out of range error." in str(exc.value)
 
 
 def test_get_user_input_fail_no_number(cli, monkeypatch):
     monkeypatch.setattr(builtins, "input", lambda: "A")
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError) as exc:
         cli.try_user_value()
+    assert "Bitte geben Sie eine Zahl zwischen %s und %s an"
