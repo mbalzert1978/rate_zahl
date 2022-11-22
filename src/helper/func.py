@@ -1,8 +1,8 @@
-from typing import Generator, Sequence
+from typing import Iterator, Sequence
 
 
-def range_inclusiv(start, stop) -> Generator[int, None, None]:
-    return (x for x in range(start, stop + 1))
+def range_inclusiv(start, stop) -> Iterator[int]:
+    return iter(range(start, stop + 1))
 
 
 def validate_range(value: tuple[int, int]) -> tuple[int, int]:

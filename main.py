@@ -11,8 +11,7 @@ def main() -> None:
 def setup_game() -> ControllerZahlRaten:
     m = RateZahlRepo((1, 100))
     v = CLI()
-    app = ControllerZahlRaten(model=m, view=v)
-    return app
+    return ControllerZahlRaten(model=m, view=v)
 
 
 if __name__ == "__main__":
