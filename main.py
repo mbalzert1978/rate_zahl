@@ -1,20 +1,19 @@
-from src.view.view import CLI
-from src.controller.controller import ControllerZahlRaten
-from src.model.model import ModelRateZahl
-from src.helper.game_range import GameRange
+from __future__ import annotations
+
+from src.controller import RateZahl
+from src.model import Model
+from src.view import CLI
 
 
-def main():
+def main() -> None:
     game = setup_game()
     game.play()
 
 
-def setup_game():
-    gr = GameRange(1, 100)
-    m = ModelRateZahl(gues_range=gr)
+def setup_game() -> RateZahl:
+    m = Model()
     v = CLI()
-    app = ControllerZahlRaten(model=m, view=v)
-    return app
+    return RateZahl(v, m)
 
 
 if __name__ == "__main__":

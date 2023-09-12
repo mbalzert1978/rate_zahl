@@ -1,21 +1,45 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Protocol
+
+import abc
 import random
+from typing import Any
 
-if TYPE_CHECKING:
-    from ..helper.game_range import GameRange
+from src.mediator import BaseComponent
 
 
-class GameModel(Protocol):
-    def is_game_over(self) -> bool:
+class ValueObject(BaseComponent, abc.ABC):
+    def is_guessed(self, gues: int) -> None:
+        ...
+
+    def is_game_over(self) -> None:
+        ...
+
+    @property
+    def value(self) -> Any:
         ...
 
 
-class ModelRateZahl:
-    def __init__(self, gues_range: GameRange, life: int = 3) -> None:
-        self._gues_range = gues_range
-        self._life = life
-        self._to_gues = random.randint(*self._gues_range)
+class Model(ValueObject):
+    def __init__(self, to_gues: int | None = None, life: int = 3) -> None:
+        self.to_gues = to_gues or random.randint(1, 100)
+        self.life = life
 
-    def is_game_over(self) -> bool:
-        return not self._life
+    @property
+    def value(self) -> Any:
+        return self.to_gues
+
+    def is_guessed(self, guess: int) -> None:
+        if guess == self.to_gues:
+            msg = "guessed"
+        elif guess > self.to_gues:
+            msg = "big"
+        else:
+            msg = "small"
+        self.mediator.notify(self, msg)
+
+
+    def is_game_over(self) -> None:
+        self.life -= 1
+        if self.life > 0:
+            return
+        self.mediator.notify(self, "gameover")
