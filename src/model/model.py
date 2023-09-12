@@ -37,7 +37,6 @@ class Model(ValueObject):
             msg = "small"
         self.mediator.notify(self, msg)
 
-
     def is_game_over(self) -> None:
         self.life -= 1
         if self.life > 0:
