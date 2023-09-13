@@ -20,6 +20,13 @@ def test_model_init() -> None:
     assert model.to_gues < 100
 
 
+def test_model_no_mediator() -> None:
+    model = Model(to_gues=3)
+
+    with pytest.raises(AttributeError, match="The mediator is not set."):
+        model.mediator
+
+
 def test_model_guessed(setup: tuple[Model, ControllerStub]) -> None:
     model, stub = setup
 

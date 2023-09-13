@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-import sys
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Sequence
 
+from src.assets import GAMETEXT
 from src.mediator import BaseComponent, Mediator
+from src.model.enums import GameState, Hint
 
 if TYPE_CHECKING:
     from src.model import ValueObject
@@ -17,28 +18,32 @@ class RateZahl(Mediator):
         self._model = model
         self._model.mediator = self
         self._guess = 0
+        self._game_running = True
 
     def notify(self, _: BaseComponent, event: str) -> None:
         match event:
             case int(value):
                 self._guess = value
-            case "guessed":
-                self._view.show("Won you guessed correctly.")
-                self._view.show("You win.")
-                sys.exit()
-            case "big":
-                self._view.show("You guessed to big.")
-            case "small":
-                self._view.show("You guessed to small.")
-            case "gameover":
-                self._view.show("Game over.")
-                self._view.show(f"The number was: {self._model.value}")
-                sys.exit()
+            case Hint.BIG:
+                self._view.show(GAMETEXT.get(Hint.BIG))
+            case Hint.SMALL:
+                self._view.show(GAMETEXT.get(Hint.SMALL))
+            case GameState.GUESSED:
+                self.show_sequence(GAMETEXT.get(GameState.WON))
+                self._game_running = False
+            case GameState.GAME_OVER:
+                self.show_sequence(GAMETEXT.get(GameState.GAME_OVER))
+                self._game_running = False
             case _:
-                return
+                raise ValueError
+
+    def show_sequence(self, msg: Sequence[str]) -> None:
+        value = self._model.value
+        for sentence in msg:
+            self._view.show(sentence.format(value=value))
 
     def play(self) -> None:
-        while True:
+        while self._game_running:
             self._view.get_user_input()
             self._model.is_guessed(self._guess)
             self._model.is_game_over()

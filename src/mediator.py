@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 class Mediator(ABC):
+    @abstractmethod
     def notify(self, sender: BaseComponent, event: str) -> None:
         ...
 
@@ -14,7 +15,7 @@ class BaseComponent:
 
     @property
     def mediator(self) -> Mediator:
-        if not self._mediator:
+        if self._mediator is None:
             msg = "The mediator is not set."
             raise AttributeError(msg)
         return self._mediator
