@@ -2,6 +2,7 @@ from typing import TypeVar
 
 from src.mediator import BaseComponent
 from src.model import ValueObject
+from src.player.human import Player
 from src.view import View
 
 T = TypeVar("T")
@@ -19,27 +20,32 @@ class ControllerStub:
 
 class ViewStub(View):
     def __init__(self) -> None:
-        self.commands = {}
+        self.commands = []
 
     def show(self, msg: str) -> None:
-        self.commands[msg] = msg
+        self.commands.append(msg)
 
-    def get_user_input(self) -> None:
-        self.commands["get_user_input"] = True
+
+class PlayerStub(Player):
+    def __init__(self) -> None:
+        self.commands = []
+
+    def get_input(self) -> None:
+        self.commands.append("get_input")
 
 
 class ModelStub(ValueObject):
     def __init__(self, to_gues: int = 5) -> None:
-        self.commands = {}
         self.to_gues = to_gues
+        self.commands = []
 
     @property
     def value(self) -> T:
         return self.to_gues
 
     def is_game_over(self) -> None:
-        self.commands["is_game_over"] = True
-        self.mediator.notify(self, "")
+        self.commands.append("is_game_over")
+        self.mediator.notify(self, None)
 
     def is_guessed(self, gues: int) -> None:
-        self.commands["is_guessed"] = gues
+        self.commands.append(gues)
