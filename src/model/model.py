@@ -33,9 +33,7 @@ class Model(ValueObject):
         return self.to_gues
 
     def __repr__(self) -> str:
-        return (
-            f"{__class__.__name__}(to_gues={self.to_gues}, life={self.life})"
-        )
+        return f"{__class__.__name__}(to_gues={self.to_gues}, life={self.life})"
 
     def is_guessed(self, guess: int) -> None:
         if guess == self.to_gues:

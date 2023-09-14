@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["Markus Iorio <mbalzert@gmail.com>"]
 readme = "README.md"
-packages = [{include = "rate_zahl"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -22,7 +21,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]
-line-length = 79
+line-length = 119
 target-version = ['py311']
 
 [tool.ruff]

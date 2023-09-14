@@ -24,9 +24,7 @@ class RateZahl(Mediator):
         self._game_running = True
 
     def __repr__(self) -> str:
-        return (
-            f"RateZahl(guess={self._guess}, game_running={self._game_running})"
-        )
+        return f"RateZahl(guess={self._guess}, game_running={self._game_running})"
 
     def notify(self, _: BaseComponent, event: str) -> None:
         match event:
