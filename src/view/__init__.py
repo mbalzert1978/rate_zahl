@@ -1,3 +1,3 @@
-from src.view.cli import CLI, View
+from src.view.cli import CLI, NoOutput, View
 
-__all__ = ["View", "CLI"]
+__all__ = ["View", "CLI", "NoOutput"]
