@@ -18,6 +18,9 @@ class View(BaseComponent, abc.ABC):
 
 
 class CLI(View):
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}()"
+
     def show(self, msg: str) -> None:
         print(msg)
 
