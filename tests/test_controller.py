@@ -76,7 +76,7 @@ def test_notify_user_case_guessed(
     }
 
 
-def test_notify_user_case_guessed(
+def test_notify_user_case_gameover(
     setup: tuple[ModelStub, ViewStub, RateZahl],
 ) -> None:
     model, view, controller = setup
