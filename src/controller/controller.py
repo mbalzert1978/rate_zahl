@@ -1,57 +1,59 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Protocol
-from ..helper.text_messages import RateZahlMessages
+
+from typing import TYPE_CHECKING, Sequence
+
+from src.assets import GAMETEXT
+from src.mediator import BaseComponent, Mediator
+from src.model.enums import GameState, Hint
 
 if TYPE_CHECKING:
-    from ..model.model import GameModel
-    from ..view.view import View
+    from src.model import ValueObject
+    from src.player.human import Player
+    from src.view import View
 
 
-class Controller(Protocol):
-    def __init__(self, model: GameModel, view: View) -> None:
-        ...
+class RateZahl(Mediator):
+    def __init__(self, view: View, model: ValueObject, player: Player) -> None:
+        self._view = view
+        self._view.mediator = self
+        self._model = model
+        self._model.mediator = self
+        self._player = player
+        self._player.mediator = self
+        self._guess = 0
+        self._game_running = True
+
+    def __repr__(self) -> str:
+        return f"RateZahl(guess={self._guess}, game_running={self._game_running})"
+
+    def notify(self, _: BaseComponent, event: str) -> None:
+        match event:
+            case Hint.BIG:
+                self._view.show(GAMETEXT.get(Hint.BIG))
+            case Hint.SMALL:
+                self._view.show(GAMETEXT.get(Hint.SMALL))
+            case GameState.GUESSED:
+                self.show_sequence(GAMETEXT.get(GameState.WON))
+                self._game_running = False
+            case GameState.GAME_OVER:
+                self.show_sequence(GAMETEXT.get(GameState.GAME_OVER))
+                self._game_running = False
+            case str(value) if value.isdigit():
+                self._guess = int(value)
+            case None:
+                self._game_running = False
+            case _:
+                self._view.show(GAMETEXT.get(GameState.NUMBER))
+                self._player.get_input()
+
+    def show_sequence(self, msg: Sequence[str]) -> None:
+        value = self._model.value
+        for sentence in msg:
+            self._view.show(sentence.format(value=value))
 
     def play(self) -> None:
-        ...
-
-
-class ControllerZahlRaten:
-    def __init__(self, model, view) -> None:
-        self._model = model
-        self._view = view
-        self._view.setup_controller(self)
-
-    def play(self):
-        msg = RateZahlMessages
-        view = self._view
-        display = view.display_message
-        game_over = self._model.is_game_over
-        gues_n = str(self._model._to_gues)
-        user_input = view.get_user_input
-
-        display(msg.TITLE.value)
-        while True:
-            user_input()
-            if self.is_guessed():
-                display(msg.WON.value % gues_n)
-                break
-            display(msg.LOSELIFE.value)
-            self.give_hint()
-            if game_over():
-                display(msg.GAMEOVER.value % gues_n)
-                break
-            display(msg.FOOTER.value)
-
-    def is_guessed(self) -> bool:
-        if self._view._user_input != self._model._to_gues:
-            self._model._life -= 1
-            return False
-        return True
-
-    def give_hint(self) -> None:
-        rzm = RateZahlMessages
-        view = self._view.display_message
-        if self._view._user_input > self._model._to_gues:
-            view(rzm.TOBIG.value)
-            return
-        view(rzm.TOSMALL.value)
+        while self._game_running:
+            self._view.show(GAMETEXT.get(GameState.GUESSED))
+            self._player.get_input()
+            self._model.is_guessed(self._guess)
+            self._model.is_game_over()

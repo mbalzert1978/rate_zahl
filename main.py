@@ -1,20 +1,26 @@
-from src.view.view import CLI
-from src.controller.controller import ControllerZahlRaten
-from src.model.model import ModelRateZahl
-from src.helper.game_range import GameRange
+from __future__ import annotations
+
+from src.controller import RateZahl
+from src.model import Model
+from src.player import AIPlayer, HumanPlayer
+from src.view import CLI, NoOutput
 
 
-def main():
-    game = setup_game()
+def main() -> None:
+    game = setup_human_player_game()
     game.play()
 
 
-def setup_game():
-    gr = GameRange(1, 100)
-    m = ModelRateZahl(gues_range=gr)
-    v = CLI()
-    app = ControllerZahlRaten(model=m, view=v)
-    return app
+def setup_computer_player_game() -> RateZahl:
+    m, v = Model(), NoOutput()
+    p = AIPlayer()
+    return RateZahl(v, m, p)
+
+
+def setup_human_player_game() -> RateZahl:
+    m, v = Model(), CLI()
+    p = HumanPlayer()
+    return RateZahl(v, m, p)
 
 
 if __name__ == "__main__":
