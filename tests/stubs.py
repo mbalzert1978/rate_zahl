@@ -1,11 +1,7 @@
-from typing import TypeVar
-
 from src.mediator import BaseComponent
 from src.model import ValueObject
 from src.player.human import Player
 from src.view import View
-
-T = TypeVar("T")
 
 
 class ControllerStub:
@@ -34,7 +30,7 @@ class PlayerStub(Player):
         self.commands.append("get_input")
 
 
-class ModelStub(ValueObject):
+class ModelStu[T](ValueObject):
     def __init__(self, to_gues: int = 5) -> None:
         self.to_gues = to_gues
         self.commands = []

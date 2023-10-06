@@ -6,7 +6,7 @@ authors = ["Markus Iorio <mbalzert@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.12"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.8.0"
@@ -21,8 +21,8 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]
-line-length = 119
-target-version = ['py311']
+line-length = 79
+target-version = ['py312']
 
 [tool.ruff]
 select = [

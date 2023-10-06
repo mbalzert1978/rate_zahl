@@ -24,19 +24,22 @@ class RateZahl(Mediator):
         self._game_running = True
 
     def __repr__(self) -> str:
-        return f"RateZahl(guess={self._guess}, game_running={self._game_running})"
+        return (
+            f"RateZahl(guess={self._guess}, "
+            f"game_running={self._game_running})"
+        )
 
     def notify(self, _: BaseComponent, event: str) -> None:
         match event:
             case Hint.BIG:
-                self._view.show(GAMETEXT.get(Hint.BIG))
+                self._view.show(GAMETEXT[Hint.BIG])
             case Hint.SMALL:
-                self._view.show(GAMETEXT.get(Hint.SMALL))
+                self._view.show(GAMETEXT[Hint.SMALL])
             case GameState.GUESSED:
-                self.show_sequence(GAMETEXT.get(GameState.WON))
+                self.show_sequence(GAMETEXT[GameState.WON])
                 self._game_running = False
             case GameState.GAME_OVER:
-                self.show_sequence(GAMETEXT.get(GameState.GAME_OVER))
+                self.show_sequence(GAMETEXT[GameState.GAME_OVER])
                 self._game_running = False
             case str(value) if value.isdigit():
                 self._guess = int(value)
