@@ -30,7 +30,7 @@ class PlayerStub(Player):
         self.commands.append("get_input")
 
 
-class ModelStu[T](ValueObject):
+class ModelStub[T](ValueObject):
     def __init__(self, to_gues: int = 5) -> None:
         self.to_gues = to_gues
         self.commands = []
