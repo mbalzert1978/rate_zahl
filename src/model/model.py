@@ -1,21 +1,23 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Protocol
+
+import dataclasses
 import random
 
-if TYPE_CHECKING:
-    from ..helper.game_range import GameRange
+from ..observer import Subject, Observer
 
 
-class GameModel(Protocol):
-    def is_game_over(self) -> bool:
-        ...
+@dataclasses.dataclass
+class Model(Subject):
+    to_gues: int = random.randint(1, 100)
+    life: int = 3
+    _observers: list[Observer] = dataclasses.field(default_factory=list)
 
+    def attach(self, observer: Observer) -> None:
+        self._observers.append(observer)
 
-class ModelRateZahl:
-    def __init__(self, gues_range: GameRange, life: int = 3) -> None:
-        self._gues_range = gues_range
-        self._life = life
-        self._to_gues = random.randint(*self._gues_range)
+    def detach(self, observer: Observer) -> None:
+        self._observers.remove(observer)
 
-    def is_game_over(self) -> bool:
-        return not self._life
+    def notify(self) -> None:
+        for observer in self._observers:
+            observer.update(self)

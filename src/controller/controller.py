@@ -1,37 +1,15 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Protocol
-from ..helper.text_messages import RateZahlMessages
 
-if TYPE_CHECKING:
-    from ..model.model import GameModel
-    from ..view.view import View
+from ..observer import Subject, Observer
 
 
-class Controller(Protocol):
-    def __init__(self, model: GameModel, view: View) -> None:
-        ...
+class RateZahl(Subject):
+    def __init__(self) -> None:
+        self._observers: list[Observer] = []
 
     def play(self) -> None:
-        ...
-
-
-class ControllerZahlRaten:
-    def __init__(self, model, view) -> None:
-        self._model = model
-        self._view = view
-        self._view.setup_controller(self)
-
-    def play(self):
-        msg = RateZahlMessages
-        view = self._view
-        display = view.display_message
-        game_over = self._model.is_game_over
-        gues_n = str(self._model._to_gues)
-        user_input = view.get_user_input
-
-        display(msg.TITLE.value)
         while True:
-            user_input()
+            result = self.get_user_input()
             if self.is_guessed():
                 display(msg.WON.value % gues_n)
                 break
@@ -41,6 +19,23 @@ class ControllerZahlRaten:
                 display(msg.GAMEOVER.value % gues_n)
                 break
             display(msg.FOOTER.value)
+
+    def get_user_input(self) -> int:
+        while True:
+            try:
+                return int(input())
+            except ValueError:
+                continue
+
+    def attach(self, observer: Observer) -> None:
+        self._observers.append(observer)
+
+    def detach(self, observer: Observer) -> None:
+        self._observers.remove(observer)
+
+    def notify(self) -> None:
+        for observer in self._observers:
+            observer.update(self)
 
     def is_guessed(self) -> bool:
         if self._view._user_input != self._model._to_gues:
