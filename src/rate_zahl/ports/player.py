@@ -1,0 +1,13 @@
+import typing
+
+
+class PlayerPort(typing.Protocol):
+    @property
+    def name(self) -> str: ...
+
+    @property
+    def lives(self) -> int: ...
+
+    def loose_a_life(self) -> None: ...
+
+    def is_alive(self) -> bool: ...

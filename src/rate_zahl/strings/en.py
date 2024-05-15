@@ -1,0 +1,8 @@
+HEADER = "Guess a number between 1 and 100:"
+SEED = "The seed is %(seed)s"
+TRY_AGAIN = "Guess again"
+LIVES = "You have %(lives)s lifes left."
+GUESSED_CORRECT = "%(guess)s is correct!"
+WIN = "You won with %(lives)s lifes left."
+LOST = "You lost."
+NUMBER_WAS = "The number was %(to_gues)s"

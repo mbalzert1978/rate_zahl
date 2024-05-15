@@ -1,0 +1,9 @@
+import typing
+
+
+class ScorePort(typing.Protocol):
+    @property
+    def rounds_played(self) -> int: ...
+
+    def next_round(self) -> None: ...
+    def serialize(self) -> str: ...
