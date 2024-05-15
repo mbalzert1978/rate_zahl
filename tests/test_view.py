@@ -1,6 +1,6 @@
 import pytest
 
-from src.view.cli import CLI
+from src.rate_zahl.view.cli import CLI
 from tests.stubs import ControllerStub
 
 

@@ -2,14 +2,14 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Sequence
 
-from src.assets import GAMETEXT
-from src.mediator import BaseComponent, Mediator
-from src.model.enums import GameState, Hint
+from src.rate_zahl.assets import GAMETEXT
+from src.rate_zahl.mediator import BaseComponent, Mediator
+from src.rate_zahl.model.enums import GameState, Hint
 
 if TYPE_CHECKING:
-    from src.model import ValueObject
-    from src.player.human import Player
-    from src.view import View
+    from src.rate_zahl.model import ValueObject
+    from src.rate_zahl.player.human import Player
+    from src.rate_zahl.view import View
 
 
 class RateZahl(Mediator):
@@ -24,10 +24,7 @@ class RateZahl(Mediator):
         self._game_running = True
 
     def __repr__(self) -> str:
-        return (
-            f"RateZahl(guess={self._guess}, "
-            f"game_running={self._game_running})"
-        )
+        return f"RateZahl(guess={self._guess}, " f"game_running={self._game_running})"
 
     def notify(self, _: BaseComponent, event: str) -> None:
         match event:

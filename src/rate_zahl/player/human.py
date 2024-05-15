@@ -1,6 +1,6 @@
 import abc
 
-from src.mediator import BaseComponent
+from src.rate_zahl.mediator import BaseComponent
 
 
 class Player(abc.ABC, BaseComponent):

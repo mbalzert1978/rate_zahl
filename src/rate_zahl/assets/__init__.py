@@ -1,4 +1,4 @@
-from src.model.enums import GameState, Hint
+from src.rate_zahl.model.enums import GameState, Hint
 
 GAMETEXT: dict[str, str] = {
     GameState.GUESSED: ("Guess a number between 1 and 100: "),

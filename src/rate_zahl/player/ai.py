@@ -1,6 +1,6 @@
 import random
 
-from src.player.human import Player
+from src.rate_zahl.player.human import Player
 
 RANGE = 1, 100
 

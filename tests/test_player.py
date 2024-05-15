@@ -1,7 +1,7 @@
 import pytest
 
-from src.player.ai import AIPlayer
-from src.player.human import HumanPlayer
+from src.rate_zahl.player.ai import AIPlayer
+from src.rate_zahl.player.human import HumanPlayer
 from tests.stubs import ControllerStub
 
 

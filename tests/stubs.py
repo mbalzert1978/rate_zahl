@@ -1,7 +1,7 @@
-from src.mediator import BaseComponent
-from src.model import ValueObject
-from src.player.human import Player
-from src.view import View
+from src.rate_zahl.mediator import BaseComponent
+from src.rate_zahl.model import ValueObject
+from src.rate_zahl.player.human import Player
+from src.rate_zahl.view import View
 
 
 class ControllerStub:

@@ -1,6 +1,6 @@
 import pytest
 
-from src.model.model import Model
+from src.rate_zahl.model.model import Model
 from tests.stubs import ControllerStub
 
 

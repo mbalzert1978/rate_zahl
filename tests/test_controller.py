@@ -1,6 +1,6 @@
 import pytest
 
-from src.controller import RateZahl
+from src.rate_zahl.controller import RateZahl
 from tests.stubs import ModelStub, PlayerStub, ViewStub
 
 

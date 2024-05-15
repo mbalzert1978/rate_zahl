@@ -3,15 +3,13 @@ from __future__ import annotations
 import abc
 import random
 
-from src.mediator import BaseComponent
-from src.model.enums import GameState, Hint
+from src.rate_zahl.mediator import BaseComponent
+from src.rate_zahl.model.enums import GameState, Hint
 
 
 class ValueObject[T](BaseComponent, abc.ABC):
-
     @property
-    def value(self) -> T:
-        ...
+    def value(self) -> T: ...
 
 
 class Model[T](ValueObject):

@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from src.controller import RateZahl
-from src.model import Model
-from src.player import AIPlayer, HumanPlayer
-from src.view import CLI, NoOutput
+from src.rate_zahl.controller import RateZahl
+from src.rate_zahl.model import Model
+from src.rate_zahl.player import AIPlayer, HumanPlayer
+from src.rate_zahl.view import CLI, NoOutput
 
 
 def main() -> None:

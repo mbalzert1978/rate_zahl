@@ -2,13 +2,12 @@ from __future__ import annotations
 
 import abc
 
-from src.mediator import BaseComponent
+from src.rate_zahl.mediator import BaseComponent
 
 
 class View(BaseComponent, abc.ABC):
     @abc.abstractmethod
-    def show(self, msg: str) -> None:
-        ...
+    def show(self, msg: str) -> None: ...
 
 
 class CLI(View):
